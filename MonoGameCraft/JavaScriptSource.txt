@@ -178,7 +178,7 @@ function renderMinecraft() {
                         var v = ((yp * 16) & 15) + 16;
                         if (d == 1) {
                             u = (xp * 16) & 15;
-                            v = ((zp * 16) & 15)D:\Code\github\MonoGameCraft\MonoGameCraft\Content\;
+                            v = ((zp * 16) & 15);
                             if (yd < 0)
                                 v += 32;
                         }
