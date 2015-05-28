@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace MonoGameCraft
 {
@@ -13,10 +14,16 @@ namespace MonoGameCraft
         SpriteBatch spriteBatch;
         VoxelRender Renderer;
 
+        double totalFrameTime = 0;
+        double numberOfFrames = 0;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.PreferredBackBufferWidth = 212 * 2;
+            graphics.PreferredBackBufferHeight = 120 * 2;
 
             this.IsFixedTimeStep = false;
         }
@@ -29,7 +36,8 @@ namespace MonoGameCraft
         /// </summary>
         protected override void Initialize()
         {
-            Renderer = new VoxelRender(GraphicsDevice, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            Renderer = new VoxelRender(GraphicsDevice);
+            Renderer.Init();
 
             base.Initialize();
         }
@@ -51,6 +59,7 @@ namespace MonoGameCraft
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            System.Console.WriteLine("Average FPS = " + (int)(numberOfFrames / totalFrameTime));
         }
 
         /// <summary>
@@ -64,7 +73,12 @@ namespace MonoGameCraft
 
             float timeStep = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            DateTime start = DateTime.Now;
             Renderer.Update(timeStep);
+            DateTime end = DateTime.Now;
+
+            totalFrameTime += (end - start).TotalSeconds;
+            numberOfFrames++;
 
             base.Update(gameTime);
         }
