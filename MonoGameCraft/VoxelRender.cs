@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MonoGameCraft
 {
@@ -161,12 +162,12 @@ namespace MonoGameCraft
             var oy = 32.5;
             var oz = 32.5;
 
-            for (var x = 0; x < w; x++)
+            Parallel.For(0, h, y => 
             {
-                double ___xd = (double)(x - w / 2) / (double)h;
-                for (var y = 0; y < h; y++)
+                double __yd = (double)(y - h / 2) / (double)h;
+                for (var x = 0; x < w; ++x)
                 {
-                    double __yd = (double)(y - h / 2) / (double)h;
+                    double ___xd = (double)(x - w / 2) / (double)h;
                     var __zd = 1;
 
                     var ___zd = __zd * yCos + __yd * ySin;
@@ -255,7 +256,7 @@ namespace MonoGameCraft
 
                     pixels[x + (y * w)] = new Color((byte)r, (byte)g, (byte)b);
                 }
-            }
+            });
         }
 
         public void Update(float timeStep)
